@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Register - Smart Bus Connect</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body class="loginPage">
+
+<div class="loginContainer">
+
+<div class="loginCard">
+
+<h2>Create Account</h2>
+
+<p class="loginSubtitle">Register for Smart Bus Connect</p>
+
+<form id="registerForm">
+
+<input type="text" id="name" placeholder="Full Name">
+
+<input type="email" id="email" placeholder="Email Address">
+
+<input type="password" id="password" placeholder="Password">
+
+<input type="password" id="confirmPassword" placeholder="Confirm Password">
+
+<button type="submit" class="primaryBtn">Register</button>
+
+</form>
+
+<p id="error" class="formError"></p>
+<p id="success" class="formSuccess"></p>
+
+<p class="registerText">
+Already have an account?
+<a href="login.html">Login</a>
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const form = document.getElementById("registerForm");
+
+form.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const name = document.getElementById("name").value.trim();
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value.trim();
+const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+const error = document.getElementById("error");
+const success = document.getElementById("success");
+
+error.innerText = "";
+success.innerText = "";
+
+if(name === "" || email === "" || password === "" || confirmPassword === ""){
+error.innerText = "All fields are required";
+return;
+}
+
+const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+if(!email.match(emailPattern)){
+error.innerText = "Enter a valid email address";
+return;
+}
+
+if(password.length < 6){
+error.innerText = "Password must be at least 6 characters";
+return;
+}
+
+if(password !== confirmPassword){
+error.innerText = "Passwords do not match";
+return;
+}
+
+try{
+
+const response = await fetch("http://localhost:5000/api/auth/register",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body: JSON.stringify({
+name,
+email,
+password
+})
+
+});
+
+const data = await response.json();
+
+if(response.ok){
+
+success.innerText = data.message;
+
+setTimeout(()=>{
+window.location.href="login.html";
+},2000);
+
+}
+else{
+
+error.innerText = data.message;
+
+}
+
+}catch(err){
+
+error.innerText = "Server error. Please try again.";
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+
+</html>

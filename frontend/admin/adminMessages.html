@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Admin Messages</title>
+<link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>TransitCloud</h2>
+
+<a href="adminDashboard.html">Dashboard</a>
+<a href="adminBuses.html">Manage Buses</a>
+<a href="adminBookings.html">Bookings</a>
+<a href="adminMessages.html">Messages</a>
+<a href="adminUsers.html">Users</a>
+
+</div>
+
+
+<!-- Main Content -->
+
+<div class="main">
+    <button onclick="logout()" class="logout-btn">Logout</button>
+
+<h1>Passenger Support Messages</h1>
+
+<button onclick="loadMessages()">Refresh Messages</button>
+
+<br><br>
+
+<div id="messageContainer">
+
+<p>Loading messages...</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="../js/adminMessages.js"></script>
+
+</body>
+</html>
